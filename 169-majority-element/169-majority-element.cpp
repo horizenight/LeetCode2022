@@ -1,9 +1,22 @@
 class Solution {
+    //boore moore algorithm
 public:
     int majorityElement(vector<int>& nums) {
-      sort(nums.begin(),nums.end());
+        int count = 0 ;
+        int major = 0;
         
-        int mid = nums.size()/2;
-        return nums[mid];
+        for(auto it:nums){
+            if(count ==0){
+                major = it;
+            }
+            if(it == major){
+                count+=1;}
+            
+            else{
+                count -=1;
+            }
+        }
+        
+        return major;
     }
 };
