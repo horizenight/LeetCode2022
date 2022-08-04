@@ -23,12 +23,23 @@ void reverse (  ListNode* &head , ListNode * curr , ListNode  * prev ){
 
     
 }
+    
+    ListNode* reversehead(ListNode * &head){
+        if(head == NULL || head->next == NULL){
+            return head ;
+        }
+        ListNode * chotahead = reversehead(head ->next);
+        head ->next ->next = head;
+        head ->next = NULL;
+        
+        return chotahead;
+    }
 public:
     ListNode* reverseList(ListNode* head) {
-ListNode * curr= head ; 
-ListNode * prev = NULL;
-reverse(head , curr , prev);
-return head;
-        
+// ListNode * curr= head ; 
+// ListNode * prev = NULL;
+// reverse(head , curr , prev);
+// return head;
+        return reversehead(head);
     }
 };
