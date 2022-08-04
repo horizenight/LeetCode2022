@@ -9,37 +9,24 @@
  * };
  */
 class Solution {
-    private:
-void reverse (  ListNode* &head , ListNode * curr , ListNode  * prev ){
-    // base case 
-    if(curr == NULL){
-        head = prev ;
-        return ;
-    }
-    ListNode * forward = curr->next;
-    reverse(head ,forward , curr );
-    curr->next = prev ; 
-
-
+    private : 
     
-}
     
-    ListNode* reversehead(ListNode * &head){
-        if(head == NULL || head->next == NULL){
-            return head ;
-        }
-        ListNode * chotahead = reversehead(head ->next);
-        head ->next ->next = head;
-        head ->next = NULL;
-        
-        return chotahead;
-    }
 public:
     ListNode* reverseList(ListNode* head) {
-// ListNode * curr= head ; 
-// ListNode * prev = NULL;
-// reverse(head , curr , prev);
-// return head;
-        return reversehead(head);
+        ListNode * prev = NULL;
+        ListNode * curr = head ;
+        ListNode * next = NULL;
+        
+        while(curr != NULL){
+            next = curr->next ;
+            curr->next = prev ;
+            prev = curr;
+            curr = next ;
+        }
+        
+        
+        return prev;
+        
     }
 };
