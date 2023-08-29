@@ -31,7 +31,31 @@ private:
         
         return dp[left][right] = ans;
     }
+
+
+    int solveUsingTab(vector<int>&arr,map<pair<int,int>, int>& maxi){
+        int n = arr.size();
+        vector<vector<int>> dp(n+1, vector<int>(n+1,0));
+        //base case 
+        for(int left = n-1 ; left >= 0 ; left--){
+            for(int right = 0 ; right <= n-1 ;right++){
+                if(left >= right){
+                    //invalid or single element 
+                    continue;
+                }
+                else{
+                    int ans = INT_MAX;
+                    for (int i = left; i < right; i++) {
+                        ans = min(ans, maxi[{left, i}] * maxi[{i+1, right}] + dp[left][i] + dp[i+1][right]); 
+                        }
+                    dp[left][right] = ans;
+                }
+            }
+        }
+    return dp[0][n-1];
+    }
 public:
+
     int mctFromLeafValues(vector<int>& arr) {
         map<pair<int,int>, int> maxi;
 
@@ -50,7 +74,7 @@ public:
 
         // intialising dp 
         vector<vector<int>> dp(n+1,vector<int>( n+1 , -1));
-        int ans = solveUsingMem(arr,maxi,0,n-1,dp);
+        int ans = solveUsingTab(arr,maxi);
 
         return ans;
     }
