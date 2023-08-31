@@ -22,10 +22,23 @@ public:
         return dp[n] = ans;
     }
 
+    int solveUsingTab(int n){
+        vector<int> dp(n+1,0);
+        // base case into dp 
+        dp[0] = 1;
+        dp[1] = 1;
+        // now dp array will go opposite from Mem
+        for(int i = 2 ; i <= n ;i++){
+            dp[i] = dp[i-1] + dp[i-2];
+            
+        }
+        return dp[n];
+    }
+
     int climbStairs(int n) {
         // insitalising dp array 
         vector<int> dp(n+1,-1);
-        int ans = solveUsingMem( n ,dp);
+        int ans = solveUsingTab( n );
         return ans;
     }
 };
