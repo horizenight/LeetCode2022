@@ -35,10 +35,27 @@ public:
         return dp[n];
     }
 
+    int solveUsingTabSO(int n){
+        if(n<=1){
+            return 1;
+        }
+        int prev1 = 1;
+        int prev2 = 1;
+        int ans ;
+        for(int i =2 ; i<=n ;i++){
+            ans = prev1 + prev2;
+            // shift 
+            prev2 = prev1;
+            prev1 = ans;
+        }
+
+        return ans;
+    }
+
     int climbStairs(int n) {
         // insitalising dp array 
         vector<int> dp(n+1,-1);
-        int ans = solveUsingTab( n );
+        int ans = solveUsingTabSO( n );
         return ans;
     }
 };
