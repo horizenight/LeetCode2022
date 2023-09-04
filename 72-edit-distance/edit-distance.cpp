@@ -63,6 +63,40 @@ class Solution
 
         return dp[0][0];
     }
+
+    int seO(string &a , string &b ){
+        vector<int> curr(b.length()+1 , 0);  //dp[i]
+        vector<int> next(b.length()+1 , 0);   //dp[i+1]
+
+       for (int j = b.length() - 1; j >= 0; j--) {
+        next[j] = b.length() - j;
+    }
+
+        for (int i = a.length()-1; i >= 0; i--)
+        {
+            for (int j = b.length()-1; j >= 0; j--)
+            {   
+                curr[b.length()] = a.length()-i;
+       
+                if (a[i] == b[j])
+                {
+                    curr[j] = next[j+1];
+                }
+                else
+                {
+                    int insert = 1 + curr[j+1];
+                    int remove = 1 +next[j];
+                    int replace = 1 + next[j+1];
+                    curr[j] = min(min(insert, remove), replace);
+
+                }
+                
+            }
+            //shift 
+                next = curr; 
+        }
+        return curr[0];
+    }
     int minDistance(string a, string b)
     {
         if (a.length() == 0)
@@ -74,7 +108,7 @@ class Solution
             return a.length();
         }
 
-        int ans = soT(a, b);
+        int ans = seO(a, b);
         return ans;
     }
 };
