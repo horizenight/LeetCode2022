@@ -30,11 +30,14 @@ public:
         return dp[i] = ans;
 
     }
-
+    
+    
+      
     int rob(vector<int>& nums) {
         int n = nums.size();
         int i = 0;
         vector<int>dp(n+1,-1);
+        // int ans = soRM(nums,n,i,dp);
         int ans = soRM(nums,n,i,dp);
         return ans;
     }
