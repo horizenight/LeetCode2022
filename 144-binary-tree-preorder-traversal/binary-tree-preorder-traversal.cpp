@@ -14,10 +14,11 @@ public:
     void preorder(vector<int> & ans , TreeNode * root){
         if(root == NULL) return ;
         // LNR
-         ans.push_back(root->val);
-        preorder(ans,root->left);
-       
-        preorder(ans,root->right);
+        ans.push_back(root->val);
+        if(root->left)
+             preorder(ans,root->left);
+        if(root->right)
+            preorder(ans,root->right);
     }
     vector<int> preorderTraversal(TreeNode* root) {
         vector<int>ans;
