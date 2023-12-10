@@ -15,8 +15,8 @@ public:
     void postorder(TreeNode * root){
         if(root == NULL) return ; 
         // LR Node 
-        if(root->left) postorderTraversal(root->left);
-        if(root->right) postorderTraversal(root->right);
+        if(root->left) postorder(root->left);
+        if(root->right) postorder(root->right);
         ans.push_back(root->val);
     }
     vector<int> postorderTraversal(TreeNode* root) {
