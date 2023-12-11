@@ -4,9 +4,9 @@ public:
         if(arr.size() == 1) return arr[0];
         double condition = 0.25 * arr.size();
         int freq=1;
-        for(int i = 1 ; i<arr.size() ; i++){
+        for(int i = 1 ; i<arr.size() ; ++i){
             if(arr[i] == arr[i-1]){
-                freq++;
+                ++freq;
                 if(freq>condition){
                     return arr[i];
                     }
