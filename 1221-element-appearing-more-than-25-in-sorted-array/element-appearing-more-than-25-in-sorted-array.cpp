@@ -1,17 +1,21 @@
 class Solution {
 public:
     int findSpecialInteger(vector<int>& arr) {
-        // keep a map 
-        // keep a count that calculates that it is more or less 
-        unordered_map<int,int> mp;
-        for(auto it : arr){
-            mp[it]++;
+        if(arr.size() == 1) return arr[0];
+        double condition = 0.25 * arr.size();
+        int freq=1;
+        for(int i = 1 ; i<arr.size() ; i++){
+            if(arr[i] == arr[i-1]){
+                freq++;
+                if(freq>condition){
+                    return arr[i];
+                    }
+            }
+            else{
+                freq=1;
+            }
         }
-        int n = arr.size() * 0.25 ;
 
-        for(auto it: mp){
-            if(it.second > n) return it.first; 
-        }
         return -1;
     }
 };
