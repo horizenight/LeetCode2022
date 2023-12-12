@@ -1,74 +1,72 @@
 class Solution {
 public:
-int coinChangeDP(vector<int> &coins, int amount)
-{
-    int n = coins.size();
-    // initialising dp ;
-    int **dp;
-    dp = new int *[n + 1];
-    for (int i = 0; i <= n; i++)
-    {
-        dp[i] = new int[amount + 1];
-        for (int j = 0; j <= amount; j++)
-        {
-            dp[i][j] = -1; // Initialize each cell with -1
+    int solveR(vector<int>&coins,int i,int j){
+
+        if(i == 0) return INT_MAX-1 ; // we cannot reach j
+        if(j == 0) return 0; // if we reach 0 that means we reached the goal 
+
+        // if divisible then that will be the least amopunt 
+        //Transaition State: 
+        // cases 1 : include but not move , include but move , exclude 
+        int exclude = solveR(coins,i-1,j); 
+        int include = INT_MAX-1;
+        if(j - coins[i-1] >=0){
+            //we can include it only once or more than once 
+            include = min(1+solveR(coins,i,j-coins[i-1]) , 1 + solveR(coins,i-1,j-coins[i-1]));
         }
+
+        return min(exclude,include);    
     }
 
-    // intialsing values for dp
-    //  1st row
-    for (int j = 0; j <= amount; j++)
-    {
-        dp[0][j] = INT_MAX - 1;
+    int solveMem( vector<vector<int>> & dp , vector<int>&coins,int i,int j){
+        if(i == 0) return dp[i][j] = INT_MAX-1 ; // we cannot reach j
+        if(j == 0) return dp[i][j] =  0; // if we reach 0 that means we reached the goal 
+        if(dp[i][j] !=  INT_MAX - 1) return dp[i][j];
+        // if divisible then that will be the least amopunt 
+        //Transaition State: 
+        // cases 1 : include but not move , include but move , exclude 
+        int exclude = solveMem(dp,coins,i-1,j); 
+        int include = INT_MAX-1;
+        if(j - coins[i-1] >=0){
+            //we can include it only once or more than once 
+            include = min(1+solveMem(dp,coins,i,j-coins[i-1]) , 1 + solveMem(dp,coins,i-1,j-coins[i-1]));
+        }
+
+        return dp[i][j] =  min(exclude,include);
     }
-    // 1 st column
-    for (int i = 1; i <= n; i++)
-    {
+
+int solveT(vector<int>&coins , int amount){
+    vector<vector<int>> dp(coins.size() + 1, vector<int>(amount + 1, INT_MAX - 1));
+
+    // Base case
+    for (int i = 0; i <= coins.size(); i++) {
         dp[i][0] = 0;
     }
-    // if diviisble then if not then INT_MAX -1
-    for (int i = 1; i <= n; i++)
-    {
-        for (int j = 1; j <= amount; j++)
-        {
-            if (j % coins[0] == 0)
-            {
-                dp[i][j] = j / coins[0];
+
+   for (int i = 1; i <= coins.size(); i++) {
+        for (int j = 0; j <= amount; j++) {
+            int exclude = dp[i - 1][j];
+            int include = INT_MAX - 1;
+
+            if (j - coins[i - 1] >= 0) {
+                include = min(1 + dp[i][j - coins[i - 1]], 1 + dp[i - 1][j - coins[i - 1]]);
             }
-            else
-            {
-                dp[i][j] = INT_MAX - 1;
-            }
+
+            dp[i][j] = min(exclude, include);
         }
     }
-
-    for (int i = 1; i <= n; i++)
-    {
-        for (int j = 1; j <= amount; j++)
-        {
-            if(coins[i-1] <=j ){
-                dp[i][j] = min(1 + dp[i][j - coins[i-1]] , dp[i-1][j]);
-            }else{
-                dp[i][j] = dp[i-1][j];
-            }
-        }
+    return dp[coins.size()][amount];
     }
-
-    // solving dp 
-    
-
-    return dp[n][amount];
-}
+   
 
     int coinChange(vector<int>& coins, int amount) {
+        int n = coins.size();
+        vector<vector<int>>dp(n+1,vector<int>(amount+1,INT_MAX-1));
+       int ans = solveT(coins,amount);
 
-
-        int ans = coinChangeDP(coins,amount);
-        if(ans == INT_MAX-1){
-            return -1;
-        }else{
-            return ans;
-        }
-        
+       if(ans == INT_MAX-1){
+           return -1;
+       }
+       return ans;
     }
 };
