@@ -4,15 +4,15 @@ public:
     bool isAnagram(string s, string t) {
          if(s.size() != t.size()) return false;
 
-        for(auto it:s){
+        for(int it:s){
             arr[ it - 'a']++;
         }
 
-          for(auto it:t){
+          for(int it:t){
             arr[ it - 'a']--;
         }
 
-        for(auto it:arr){
+        for(int it:arr){
             if(it!= 0) return false;
         }
         
