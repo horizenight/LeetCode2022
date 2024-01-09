@@ -22,7 +22,7 @@ public:
                     it.second--;
                 }
             }
-            reverse(temp.begin(),temp.end());
+            // reverse(temp.begin(),temp.end());
             ans.push_back(temp);
             temp.clear();
         }
