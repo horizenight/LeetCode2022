@@ -1,19 +1,20 @@
 class Solution {
 public:
+    int depth = 0 ;
     int minOperations(vector<string>& logs) {
-      vector<string>paths_stack;
-
-      for(string & log: logs){
-        if(log == "../"){
-            if(!paths_stack.empty()){
-                paths_stack.pop_back();
+        for(auto log : logs){
+            if(log == "../"){
+                if(depth == 0) continue;
+                depth--;
+            }
+            else if(log == "./"){
+                continue;
+            }
+            else{
+                depth++;
             }
         }
-        else if(log !="./"){
-            paths_stack.push_back(log);
-        }
-      } 
 
-      return paths_stack.size();
+        return depth;
     }
 };
